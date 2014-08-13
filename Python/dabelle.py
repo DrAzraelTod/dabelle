@@ -1,14 +1,24 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-import sys, getopt
+import sys, getopt, fileinput
 import config
+import table
 
 debug = False
 simple = True
 
-class dabelle(object):
+class Dabelle(object):
+    tables  = []
+
     def __init__(self, input):
+      self.read_input(input)
       sys.exit(3)
+    def read_input(self, input):
+      if input==False:
+         self.tables += table.Table(fileinput.input)
+      else:
+         f = open(input,'r')
+         self.tables += table.Table(f.readline)
 
 def usage():
     print("parameters:")
@@ -23,6 +33,7 @@ def usage():
 
 if __name__ == '__main__':
     mode = 'default'
+    source = False
     shortOptions = 'dcsf:m:h'
     longOptions = ['debug', 'calculate', 'simple', 'file=', 'mode=', 'help']
     try:
@@ -40,6 +51,8 @@ if __name__ == '__main__':
             sys.exit(0)
         elif o in ("--calculate", "-c"):
             simple = True;
+        elif o in ("--file", "-f"):
+            source=a
         elif o in ("--simple", "-s"):
             simple = false
         elif o in ("--mode", "-m"):
@@ -48,4 +61,4 @@ if __name__ == '__main__':
             print("[Fehler] Fehlerhafter Parameter")
             usage()
             sys.exit(2)
-    dabelle(config.Config(mode))
+    Dabelle(source)
