@@ -33,6 +33,31 @@ unparseable field-content is treated as not containing any commands at all (alth
  - & merge with next field, if followed by integer, then merge with next N fields
  - = calculate something, if both field-text and this is aviable, then field-text is only displayed if this doesn't evaluate
 
+### inline/whole-file
+
+two modes to run should be whole-file or inline-modes
+
+in whole file it's asumed that everything in that file is a single table
+
+in inline-mode one file can contain arbitrary numbers of tables
+everything outside of tables is ignored (and forwarded to output without change)
+tables are started/ended via "\n||table\_name||\n" and "\n||/table\_name||\n"
+
+### Example:
+
+  this is an example text
+  it's to be completely ignored by the parser
+  
+  but the next line starts the first table
+  ||table 1||
+  \_multiply with\_!titles|!foo|!bar|!foobar
+  \_1|foo|bar|foobar
+  \_2|foofoo|barbar|foobarfoobar
+  \_3|foofoofoo|barbarbar|foobarfoobarfoobar
+  ||/table 1||
+  
+  this text is ignored again
+
 ## Where?
 
 Plan is to write parsers in python and maybe js and/or go.
