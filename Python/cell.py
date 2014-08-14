@@ -26,6 +26,10 @@ class Cell(object):
       return self.manual_id
     return "Cell_%i_%i" % (self.x, self.y)
 
+  def get_value(self):
+    #TODO: check for calculation
+    return self.value
+
   props = {
    "_": set_hheading,
    "!": set_vheading,
