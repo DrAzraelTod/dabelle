@@ -45,18 +45,18 @@ tables are started/ended via "\n||table\_name||\n" and "\n||/table\_name||\n"
 
 ### Example:
 
-  this is an example text
-  it's to be completely ignored by the parser
-  
-  but the next line starts the first table
-  ||table 1||
-  \_multiply with\_!titles|!foo|!bar|!foobar
-  \_1|foo|bar|foobar
-  \_2|foofoo|barbar|foobarfoobar
-  \_3|foofoofoo|barbarbar|foobarfoobarfoobar
-  ||/table 1||
-  
-  this text is ignored again
+    this is an example text
+    it's to be completely ignored by the parser
+    
+    but the next line starts the first table
+    ||table 1||
+    _multiply with_!titles|!foo|!bar|!foobar
+    _1|foo|bar|foobar
+    _2|foofoo|barbar|foobarfoobar
+    _3|foofoofoo|barbarbar|foobarfoobarfoobar
+    ||/table 1||
+    
+    this text is ignored again
 
 ## Where?
 
