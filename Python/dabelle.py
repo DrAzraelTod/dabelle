@@ -14,11 +14,12 @@ class Dabelle(object):
       self.read_input(input)
       sys.exit(3)
     def read_input(self, input):
+      fi = False
       if input==False:
-         self.tables += table.Table(fileinput.input)
+         fi = fileinput.input
       else:
-         f = open(input,'r')
-         self.tables += table.Table(f.readline)
+         fi = open(input,'r').xreadlines
+      self.tables.append(table.Table(fi))
 
 def usage():
     print("parameters:")
@@ -26,7 +27,7 @@ def usage():
     print(" -d --debug\t\t-> enables debug-mode")
     print(" -s --simple\t\t-> no calculations (a-mode)")
     print(" -c --calculate\t\t-> enable calculation-parsing")
-    print(" -f --file\t\t-> what file to parse?")
+    print(" -f --file\t\t-> what file to parse? (else: stdin)")
     print(" -m --mode\t\t-> what config-mode to use")
     print("simple/calculate are opposites (combining makes no sense)")
 
