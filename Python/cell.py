@@ -2,9 +2,37 @@ import re
 
 class Cell(object):
   value = False
-  fieldid = False
   x = 0
   y = 0
+  hheading = ""
+  vheading = ""
+  manual_id = False
+  merged = 0
+  calculation = False
+
+  def set_hheading(self,text):
+    self.hheading = text
+  def set_vheading(self,text):
+    self.vheading = text
+  def set_id(self,text):
+    self.manual_id = text
+  def set_merged(self,count):
+    self.merged = int(count)
+  def set_calculation(self,text):
+    self.calculation = text
+
+  def get_id(self):
+    if self.manual_id != False:
+      return self.manual_id
+    return "Cell_%i_%i" % (self.x, self.y)
+
+  props = {
+   "_": set_hheading,
+   "!": set_vheading,
+   "#": set_id,
+   "&": set_merged,
+   "=": set_calculation,
+  }
 
   def __init__(self,substr,x,y):
     self.x = x
@@ -15,11 +43,10 @@ class Cell(object):
         break
       substr = temp
     self.value = substr
-    print("cell %i %i - %s" % (self.x, self.y, self.value))
+    print("%s (%i;%i)  %s" % (self.get_id(), self.x, self.y, self.value))
 
   def search_property(self,substr):
-    props = "_!#&="
-    print("search %s" % substr)
+    props = self.props.keys()
     r = re.compile(r"^([^a-zA-Z0-9])(.*)(\1)")
     res = r.split(substr)
     if len(res) > 3:
@@ -35,5 +62,4 @@ class Cell(object):
       return substr
 
   def found_property(self,name,value):
-    print("property %s found: %s" %(name, value))
-    pass
+    self.props[name](self,value)
