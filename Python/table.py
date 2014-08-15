@@ -4,15 +4,24 @@ class Table(object):
   lines = []
 
   def __init__(self,read_func):
+    self.lines = []
     i = 0
     for l in read_func():
-      print(l)
-      self.lines.append(line.Line(l, i))
-      i += 1
+      if "\n" in l:
+        for p in l.split("\n"):
+          self.create_line(p)
+      else:
+        self.create_line(l)
     print(self.to_plaintext())
 
+  def create_line(self,text):
+    if len(text) <1:
+      return
+    i = len(self.lines)+1
+    self.lines.append(line.Line(text, i))
+
   def to_plaintext(self):
-    ret = []
+    ret = "\n"
     widths = {}
     for l in self.lines:
       for c in l.cells:
@@ -25,8 +34,9 @@ class Table(object):
           widths[y] = v
     print(widths)
     for l in self.lines:
-      values = []
+      print(len(l.cells))
+      line = []
       for c in l.cells:
-        values.append(" %s" % c.get_value().ljust(widths[c.y]))
-      ret.append("| %s |" % "|".join(values))
-    return ("\n".join(ret))
+        line.append(c.get_value().ljust(widths[c.y]))
+      ret += "\n| %s |" % (" | ".join(line))
+    return ret
