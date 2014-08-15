@@ -15,6 +15,15 @@ to reach it's goals, dabelle-parsers should be able to do two things:
 Of course part b can be a security-risk, result in infinite loops or otherwise unwanted. Because of this that part is entirely optional.
 Every dabelle-b parser should be able to run in a mode where containing data is entirely ignored.
 
+Output should be implemented into multiple formats (currently none is finished):
+
+ - Plaintext (but something prettier than dabelle)
+ - HTML (the possibilieties to make this flexible are endless)
+ - the "SocialCalc":http://aosabook.org/en/socialcalc.html serilisation format
+ - CSV (nearly no functionality, but easy to implement)
+ - odt/xlsx (well, no.. not in the forseeable future at least)
+ - ...
+
 ## How?
 
 basically dabelle works similar to CSV, but with some more restrictions:
