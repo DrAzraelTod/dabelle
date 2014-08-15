@@ -38,6 +38,7 @@ unparseable field-content is treated as not containing any commands at all (alth
 two modes to run should be whole-file or inline-modes
 
 in whole file it's asumed that everything in that file is a single table
+Those files should be named \*.dabl for obvious reasons.
 
 in inline-mode one file can contain arbitrary numbers of tables
 everything outside of tables is ignored (and forwarded to output without change)
