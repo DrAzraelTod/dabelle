@@ -37,6 +37,11 @@ class Table(object):
       print(len(l.cells))
       line = []
       for c in l.cells:
-        line.append(c.get_value().ljust(widths[c.y]))
-      ret += "\n| %s |" % (" | ".join(line))
+        char =" "
+        if len(c.vheading) > 0:
+          char = "_"
+        if len(c.hheading) > 0:
+          char = "~"
+        line.append(char+c.get_value().ljust(widths[c.y], char)+char)
+      ret += "\n|%s|" % ("|".join(line))
     return ret
