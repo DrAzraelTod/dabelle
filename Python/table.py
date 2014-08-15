@@ -15,20 +15,18 @@ class Table(object):
     ret = []
     widths = {}
     for l in self.lines:
-      y = 0
       for c in l.cells:
+        y = c.y
         v = len(c.get_value())
-        if len(widths) > y:
+        if y in widths:
           if widths[y] < v:
             widths[y] = v
         else:
           widths[y] = v
-        y += 1
+    print(widths)
     for l in self.lines:
       values = []
-      y = 0
       for c in l.cells:
-        values.append(" %s" % c.get_value().ljust(widths[y]))
-        y += 1
+        values.append(" %s" % c.get_value().ljust(widths[c.y]))
       ret.append("| %s |" % "|".join(values))
-    return ("\n".join(ret))+"\n"
+    return ("\n".join(ret))
