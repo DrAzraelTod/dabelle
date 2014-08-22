@@ -43,7 +43,7 @@ var dabelle = function(source) {
     return false;
   }
 
-  dabelle.parseCell = function(text) {
+  dabelle.parseCell = function(text, x, y) {
     temp = text;
     props = {}
     r = /^([^a-zA-Z0-9])(.*)(\1)/;
@@ -58,11 +58,23 @@ var dabelle = function(source) {
       props[temp[0]] = temp.substr(1);
       temp = temp.substr(1);
     }
-    console.log(props,temp);
+    if (!dabelle.cells) {
+      dabelle.cells = {}
+    }
+    if (!dabelle.cells[x]) {
+      dabelle.cells[x] = {}
+    }
+    dabelle.cells[x][y] = [temp,props];
+    return [temp, props];
   }
-  dabelle.parseLine = function(text) {
+  dabelle.parseLine = function(text, x) {
     var cells = text.split("|");
-    cells.forEach(dabelle.parseCell)
+    var y = -1;
+//    cells.forEach(dabelle.parseCell)
+    cells.forEach(function(c) {
+      y++;
+      return dabelle.parseCell(c,x,y);
+    });
   }
 
   dabelle.parseData = function(data) {
