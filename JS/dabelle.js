@@ -2,7 +2,16 @@ var dabelle = function(source) {
   dabelle.table = [];
   dabelle.cells = {};
   dabelle.debug = true;
-  dabelle.props = "_!&#=";
+  dabelle.props = "";
+
+  dabelle.all_props = {
+   "_": "hheading",
+   "!": "vheading",
+   "#": "id",
+   "&": "merged",
+   "=": "calculation",
+  }
+  for(var k in dabelle.all_props) dabelle.props += k;
 
   dabelle.init = function(source) {
     if (source.search("\n") >= 0) {
@@ -24,8 +33,18 @@ var dabelle = function(source) {
     // Now we have data! \o/
   }
 
-  dabelle.to_plaintext = function() {
-    return dabelle.cells;
+  dabelle.to_plaintext = function(linebreak) {
+    if (!linebreak) linebreak = "\n";
+    var ret = "";
+    for (x in dabelle.cells) {
+      var line = dabelle.cells[x];
+      ret += linebreak+"|";
+      for (y in line) {
+        var cell = line[y];
+        ret += " "+cell[0]+" |";
+      }
+    }
+    return ret;
   }
 
   dabelle.error = function(output) {
@@ -50,7 +69,8 @@ var dabelle = function(source) {
     while (r.exec(temp)) {
       f = r.exec(temp);
       if (false !== dabelle.parseProp(f[1], f[2])) {
-        props[f[1]] = f[2];
+        var key = dabelle.all_props[f[1]]
+        props[key] = f[2];
       }
       temp = temp.replace(r,""); // remove current property
     }
